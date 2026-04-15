@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>管理者ログイン - Chu-Chu-Trick</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ログイン画面専用のレトロ・システムスタイル */
+        .login-box { 
+            width: 350px; 
+            margin-top: 50px; 
+            padding: 20px; 
+            border: 2px outset #eee; 
+            background-color: #f0f0f0; 
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+        }
+        .pass-select { 
+            width: 220px; 
+            margin-bottom: 12px; 
+            font-family: "MS Pゴシック", sans-serif; 
+            font-size: 14px; 
+            border: 2px inset #fff; 
+            background-color: #ffffff;
+        }
+        button { 
+            font-family: "MS Pゴシック"; 
+            background: #cccccc; 
+            border: 2px outset #ffffff; 
+            padding: 4px 20px; 
+            cursor: pointer; 
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        button:active { 
+            border: 2px inset #ffffff; 
+        }
+        .warning-text {
+            color: #ff0000;
+            font-size: 11px;
+            margin-top: 15px;
+            border: 1px dashed #ff0000;
+            padding: 5px;
+        }
+    </style>
+    <script>
+        // 【解析対策1】右クリック禁止
+        document.oncontextmenu = function() { 
+            alert("\u5185\u90e8\u6a5f\u5bc6\u306b\u4ed8\u304d\u3001\u53f3\u30af\u30ea\u30c3\u30af\u306f\u5236\u9650\u3055\u308c\u3066\u3044\u307e\u3059\u3002"); 
+            return false; 
+        };
+
+        // 【解析対策2】F12キーなどの簡易無効化（気休め程度ですが雰囲気作り）
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) return false;
+        };
+    </script>
+</head>
+<body background="https://www.transparenttextures.com/patterns/cubes.png">
+
+    <div style="text-align: right; font-size: 10px; margin: 5px;">
+        <a href="index.html" style="color: #999; text-decoration: none;">Public Site Home</a>
+    </div>
+
+    <center>
+        <div class="login-box">
+            <p><img src="https://via.placeholder.com/20x20.png?text=!" style="vertical-align:middle;"> <b>AUTHENTICATION SYSTEM</b></p>
+            <hr noshade size="1">
+            <p align="left"><font size="2">アクセス権限を確認します。<br>指定のシーケンスを入力してください：</font></p>
+            
+            <select id="s1" class="pass-select">
+                <option value="0">-- SELECT --</option>
+                <option value="skr">桜</option>
+                <option value="ssn">水仙</option>
+                <option value="srn">鈴蘭</option>
+                <option value="hys">風信子</option>
+                <option value="rnd">竜胆</option>
+            </select><br>
+
+            <select id="s2" class="pass-select">
+                <option value="0">-- SELECT --</option>
+                <option value="skr">桜</option>
+                <option value="ssn">水仙</option>
+                <option value="srn">鈴蘭</option>
+                <option value="hys">風信子</option>
+                <option value="rnd">竜胆</option>
+            </select><br>
+
+            <select id="s3" class="pass-select">
+                <option value="0">-- SELECT --</option>
+                <option value="skr">桜</option>
+                <option value="ssn">水仙</option>
+                <option value="srn">鈴蘭</option>
+                <option value="hys">風信子</option>
+                <option value="rnd">竜胆</option>
+            </select><br>
+
+            <select id="s4" class="pass-select">
+                <option value="0">-- SELECT --</option>
+                <option value="skr">桜</option>
+                <option value="ssn">水仙</option>
+                <option value="srn">鈴蘭</option>
+                <option value="hys">風信子</option>
+                <option value="rnd">竜胆</option>
+            </select><br>
+
+            <select id="s5" class="pass-select">
+                <option value="0">-- SELECT --</option>
+                <option value="skr">桜</option>
+                <option value="ssn">水仙</option>
+                <option value="srn">鈴蘭</option>
+                <option value="hys">風信子</option>
+                <option value="rnd">竜胆</option>
+            </select><br>
+            
+            <button onclick="_0x_cct_login()">ENTER</button>
+
+            <div class="warning-text">
+                <b>WARNING:</b> Unauthorized access is strictly prohibited.<br>
+                IP address and system logs are being recorded.
+            </div>
+            
+            <p><a href="home.html"><font size="2">⇒キャンセルして戻る</font></a></p>
+        </div>
+
+        <p><font size="1" color="#999">System Version 1.0.2(Rel_2010)</font></p>
+    </center>
+
+    <script>
+        /**
+         * 【解析対策3】難読化ロジック
+         * 正解のシーケンス: 桜(skr) -> 水仙(ssn) -> 鈴蘭(srn) -> 竜胆(rnd) -> 風信子(hys)
+         * 結合文字列: "skrssnsrnrndhys"
+         * Base64期待値: "c2tyc3Nuc3Jucm5kaHlz"
+         */
+        function _0x_cct_login() {
+            var v1 = document.getElementById('s1').value;
+            var v2 = document.getElementById('s2').value;
+            var v3 = document.getElementById('s3').value;
+            var v4 = document.getElementById('s4').value;
+            var v5 = document.getElementById('s5').value;
+            
+            var _combined = v1 + v2 + v3 + v4 + v5;
+            
+            // 比較対象をBase64にすることで、パッと見の正解を隠蔽
+            if (btoa(_combined) === "c2tyc3Nuc3Jucm5kaHlz") {
+                alert("\u8a8d\u8a3c\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\u3002\n\u30a2\u30fc\u30ab\u30a4\u30d6\u3078\u30a2\u30af\u30bb\u30b9\u3057\u307e\u3059\u3002"); 
+                // 成功後の遷移先（logined.html）
+                window.location.href = "logined.html";
+            } else {
+                // 並び順が正しくありません
+                alert("\u8a8d\u8a3c\u30a8\u30e9\u30fc\uff1a\u30b7\u30fc\u30b1\u30f3\u30b9\u304c\u4e0d\u4e00\u81f4\u3067\u3059\u3002");
+            }
+        }
+    </script>
+</body>
+</html>

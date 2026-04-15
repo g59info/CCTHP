@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLASSIFIED - Project G59</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Noto+Sans+JP:wght@100;900&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Noto Sans JP', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 100%);
+            overflow-x: hidden;
+        }
+
+        header {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.3em;
+            font-weight: 400;
+            font-size: 0.7rem;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 60px 0;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.5rem, 7vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #cf0b39, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            filter: drop-shadow(0 0 10px rgba(207, 11, 57, 0.5));
+        }
+
+        .hero-sub {
+            color: #888;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            font-weight: 100;
+        }
+
+        .data-list {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+            margin-top: 50px;
+        }
+
+        .data-item {
+            position: relative;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out;
+        }
+
+        .data-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .data-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 2px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            border: 1px solid rgba(207, 11, 57, 0.2);
+        }
+
+        .data-label {
+            font-family: 'Orbitron', sans-serif;
+            position: absolute;
+            top: -30px;
+            left: 0;
+            font-size: 0.65rem;
+            color: #cf0b39;
+            text-transform: uppercase;
+            letter-spacing: 0.4em;
+            line-height: 1.2;
+            font-weight: 400;
+        }
+
+        /* ★ここを修正：キャラ名のウェイトを極太に★ */
+        .data-label span {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 900; 
+            opacity: 1;
+        }
+
+        @media screen and (max-width: 600px) {
+            .data-label span::before {
+                content: "\A";
+                white-space: pre;
+            }
+            .hero-title {
+                margin-top: 20px;
+            }
+        }
+
+        footer {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            padding: 80px 0 40px;
+            color: #333;
+            font-size: 0.55rem;
+            letter-spacing: 0.4em;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    PROJECT_G59 // ARCHIVE_DATA
+</header>
+
+<div class="container">
+    <section class="hero-section">
+        <div class="hero-title">GΔ59: REINCARNATED</div>
+        <p class="hero-sub">CLASSIFIED DATA: VISUAL ARCHIVE</p>
+    </section>
+
+    <div class="data-list">
+        <div class="data-item"><span class="data-label">#01 Program:00 Key Visual</span><img src="logined01.png" alt="Data 01"></div>
+        <div class="data-item"><span class="data-label">#02 Character Design <span>/ Yoiyami Me</span></span><img src="logined02.png" alt="Data 02"></div>
+        <div class="data-item"><span class="data-label">#03 Character Design <span>/ Chiaki Luna</span></span><img src="logined03.png" alt="Data 03"></div>
+        <div class="data-item"><span class="data-label">#04 Character Design <span>/ Tsumetogi Ran</span></span><img src="logined04.png" alt="Data 04"></div>
+        <div class="data-item"><span class="data-label">#05 Character Design <span>/ Tsumetogi Len</span></span><img src="logined05.png" alt="Data 05"></div>
+        <div class="data-item"><span class="data-label">#06 Character Design <span>/ Amagami konkon</span></span><img src="logined06.png" alt="Data 06"></div>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 G59. ALL RIGHTS RESERVED.
+</footer>
+
+<script>
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.data-item').forEach(el => {
+        observer.observe(el);
+    });
+</script>
+
+</body>
+</html>
