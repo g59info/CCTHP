@@ -20,6 +20,65 @@
             overflow-x: hidden;
         }
 
+        /* --- ポップアップ・モーダルのスタイル --- */
+        #access-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease;
+        }
+
+        #modal-content {
+            max-width: 600px;
+            width: 90%;
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid #cf0b39;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(207, 11, 57, 0.3);
+            animation: modalFadeIn 1s ease-out;
+        }
+
+        .modal-text {
+            font-size: 0.9rem;
+            line-height: 2;
+            letter-spacing: 0.1em;
+            margin-bottom: 30px;
+            font-weight: 100;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .modal-btn {
+            font-family: 'Orbitron', sans-serif;
+            background: transparent;
+            color: #cf0b39;
+            border: 1px solid #cf0b39;
+            padding: 10px 40px;
+            cursor: pointer;
+            letter-spacing: 0.3em;
+            transition: all 0.3s;
+        }
+
+        .modal-btn:hover {
+            background: #cf0b39;
+            color: #fff;
+            box-shadow: 0 0 15px #cf0b39;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- 既存のスタイル --- */
         header {
             height: 60px;
             display: flex;
@@ -153,6 +212,19 @@
 </head>
 <body>
 
+<div id="access-modal">
+    <div id="modal-content">
+        <div class="modal-text">
+            花葬、転生は終了いたしました。<br>皆様の花葬、■の一部のご提供誠に感謝いたします。<br><br>
+            御礼としてプロジェクトアートワーク及び、<br>初公開となりますキャラクターデザインと<br>設定資料のアクセス権限を付与いたします。<br><br>
+            <span style="font-size: 0.75rem; color: #666;">
+            当サイトに関わる全ての事象はフィクションです。<br>実名の事件や団体は一切関係ございません。<br>真実は形成されました。
+            </span>
+        </div>
+        <button class="modal-btn" onclick="closeModal()">OK</button>
+    </div>
+</div>
+
 <header>
     PROJECT_G59 // ARCHIVE_DATA
 </header>
@@ -164,17 +236,14 @@
     </section>
 
     <div class="data-list">
-        <div class="data-item"><img src="endmail.png" alt="Archive Data"></div>
-
-        <div class="data-item spacer-extreme"><span class="data-label">#01 Teaser Visual</span><img src="main.png" alt="Teaser 01"></div>
+        <div class="data-item"><span class="data-label">#01 Teaser Visual</span><img src="main.png" alt="Teaser 01"></div>
         <div class="data-item"><span class="data-label">#02 Teaser Visual Alter</span><img src="main4.png" alt="Teaser 02"></div>
         <div class="data-item"><span class="data-label">#03 Program:00 Key Visual</span><img src="logined01.png" alt="Data 01"></div>
         <div class="data-item"><span class="data-label">#04 Character Design <span>/ Yoiyami Me</span></span><img src="logined02.png" alt="Data 02"></div>
         <div class="data-item"><span class="data-label">#05 Character Design <span>/ Chiaki Luna</span></span><img src="logined03.png" alt="Data 03"></div>
-        <div class="data-item"><span class="data-label">#06 Character Design <span>/ Tsumetogi Ran</span></span><img src="logined04.png" alt="Data 04"></div>
-        <div class="data-item"><span class="data-label">#07 Character Design <span>/ Tsumetogi Rin</span></span><img src="logined05.png" alt="Data 05"></div>
-        <div class="data-item"><span class="data-label">#08 Character Design <span>/ Amagami konkon</span></span><img src="logined06.png" alt="Data 06"></div>
-        <div class="data-item"><span class="data-label">#09 First Main Visual</span><img src="logined07.png" alt="Data 07"></div>
+        <div class="data-item"><span class="data-label">#06 Character Design <span>/ Tsumetogi Rin</span></span><img src="logined05.png" alt="Data 05"></div>
+        <div class="data-item"><span class="data-label">#07 Character Design <span>/ Amagami konkon</span></span><img src="logined06.png" alt="Data 06"></div>
+        <div class="data-item"><span class="data-label">#08 GΔ59First Main Visual</span><img src="logined07.png" alt="Data 07"></div>
 
         <div class="data-item spacer-extreme"><img src="TRUE.png" alt="Archive Data TRUE"></div>
     </div>
@@ -185,6 +254,16 @@
 </footer>
 
 <script>
+    // モーダルを閉じる関数
+    function closeModal() {
+        const modal = document.getElementById('access-modal');
+        modal.style.opacity = '0';
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 800);
+    }
+
+    // 画像の遅延表示
     const observerOptions = { threshold: 0.1 };
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
