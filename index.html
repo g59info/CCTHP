@@ -2,69 +2,286 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>☆★☆ Chu-Chu-Trick! Official ☆★☆</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body background="https://www.transparenttextures.com/patterns/cubes.png">
-    <div style="text-align: right; font-size: 10px; margin: 5px;">
-        <a href="login.html" style="color: #666; text-decoration: none;">管理者ログイン</a>
-    </div>
-    
-    <center>
-        <h1 class="title">🍓Chu-Chu-Trick🍓</h1>
-        <marquee scrollamount="5" bgcolor="#FFCCFF">
-            <font color="#FF0000"><b>【NEWS】</b> 6/30 お知らせを更新しました。　　【更新】 5/14 お知らせを更新しました。☆</font>
-        </marquee>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>東京仮想 - Project G59</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --system-green: #00ff41;
+            --teaser-white: #ffffff;
+            --win-gray: #c0c0c0;
+            --win-blue: #000080;
+        }
 
-        <table border="1" cellspacing="5" cellpadding="10" width="850" bgcolor="#FFFFFF" class="main-table">
-            <tr>
-                <td width="200" valign="top" class="sidebar">
-                    <p align="center"><b>MENU</b></p>
-                    <hr noshade size="2">
-                    <a href="home.html">TOP（ここ）</a><br>
-                    <a href="news.html">お知らせ</a><br>
-                    <a href="member.html">メンバー紹介</a><br>
-                    <a href="schedule.html">スケジュール</a><br>
-                    <a href="blog.html">ブログ</a><br>
-                    <a href="info.html">インフォメーション</a><br>
-                    <hr noshade size="2">
-                    <p align="center">
-                        あなたは…<br>
-                        <span class="counter">00001584</span><br>
-                        人目の訪問者です！<br>
-                        <font size="2" color="red">※キリ番報告はBBSまで！</font>
-                    </p>
-                    <hr noshade size="2">
-                    <p align="center">
-                        <img src="CCTlogo.png" alt="CCTロゴ" width="180" border="1">
-                    </p>
-                </td>
-                <td valign="top" class="content">
-                    <h2 class="section-title">🍓 Welcome to Chu-Chu-Trick! 🍓</h2>
-                    <p align="center">
-                        地下アイドル「Chu-Chu-Trick」の<br>
-                        ホームページへようこそ！
-                    </p>
-                    <p align="center">
-                        <img src="idol_photo.jpg" alt="集合写真" width="350" border="5" style="border-color: #FF66CC;">
-                    </p>
-                    <table border="2" width="100%" bordercolor="#FFCCE6" cellpadding="5" cellspacing="0">
-                        <tr><td bgcolor="#FFCCE6"><b>★最新情報★</b></td></tr>
-                        <tr><td>2010/06/30：お知らせを更新しました<br>2010/05/14：お知らせを更新しました。<br>2010/05/07：お知らせを更新しました。<br>2010/04/30：お知らせを更新しました。<br>2010/04/30：昨日はライブありがとうございましたっ！</td></tr>
-                    </table>
-                    <p align="center">
-                        <font size="5" color="#FF00FF"><b>絶賛！応援コメント募集中！</b></font><br>
-                        <img src="https://via.placeholder.com/150x50.png?text=UNDER+CONSTRUCTION" alt="工事中">
-                    </p>
-                </td>
-            </tr>
-        </table>
-       <p>
-            <font size="2">
-                2010 Chu-Chu-Trick<br>
-                このサイトはフィクションです。
-            </font>
-        </p>
-    </center>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: var(--bg-color); font-family: "Noto Serif JP", serif; color: #fff; }
+
+        body::before {
+            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.05), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.05));
+            z-index: 10001; background-size: 100% 4px, 3px 100%; pointer-events: none; opacity: 0.6;
+        }
+
+        .phase-4-red, .phase-4-red #loading-screen, .phase-4-red .teaser-screen, .phase-4-red #logo-screen {
+            background-color: #600 !important;
+            --system-green: #fff;
+            --teaser-white: #000;
+        }
+
+        #loading-screen, .teaser-screen, #logo-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9000;
+            background-color: var(--bg-color);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            transition: opacity 1s, clip-path 1s cubic-bezier(0.8, 0, 0.2, 1);
+        }
+
+        #loading-screen { z-index: 9999; font-family: 'Courier New', monospace; }
+        #loading-screen.loaded { opacity: 0; pointer-events: none; }
+
+        .loading-text { font-size: 1.1rem; letter-spacing: 0.3em; color: var(--system-green); }
+        .progress-container { width: 300px; height: 4px; background: rgba(0,255,65,0.2); margin-top: 20px; }
+        #progress-bar { width: 0%; height: 100%; background: var(--system-green); box-shadow: 0 0 15px var(--system-green); transition: width 0.1s linear; }
+
+        .teaser-screen { opacity: 0; visibility: hidden; width: 100%; }
+        .teaser-text { 
+            text-align: center; color: var(--teaser white); font-weight: 900;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+            transform: scale(1.4) rotateX(10deg); filter: blur(20px); letter-spacing: 0.5em; opacity: 0; width: 95%;
+            font-size: 4rem;
+            line-height: 1.3;
+        }
+
+        .teaser-screen.active { opacity: 1; visibility: visible; }
+        .teaser-screen.active .teaser-text { animation: cineMotion 1s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
+
+        @keyframes cineMotion {
+            0% { transform: scale(1.4) rotateX(10deg); filter: blur(20px); letter-spacing: 0.5em; opacity: 0; }
+            100% { transform: scale(1) rotateX(0deg); filter: blur(0px); letter-spacing: 0.15em; opacity: 1; }
+        }
+
+        .phase-4-red .teaser-text span { animation: pulseMurder 0.8s 1s infinite alternate; }
+        @keyframes pulseMurder {
+            0% { text-shadow: 0 0 10px #000; transform: scale(1); }
+            100% { text-shadow: 0 0 40px #000; transform: scale(1.1); }
+        }
+
+        /* 画像を画面の中央に配置するためのCSS修正 */
+        #main-content { 
+            width: 100%; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; /* これで縦方向を中央揃えにする */
+            opacity: 0; 
+            transition: opacity 2s; 
+            z-index: 1; 
+            background: #000; /* 画面全体の背景を黒にして黒帯を作る */
+        }
+        #main-content.show { opacity: 1; }
+        .hero-image { 
+            max-width: 100%; /* 横幅は最大でも画面いっぱい */
+            max-height: 100%; /* 高さも最大でも画面いっぱい */
+            width: auto; /* 縦横比を維持 */
+            height: auto; /* 縦横比を維持 */
+            object-fit: contain; /* containmentを強制 */
+        }
+
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://raw.githubusercontent.com/manan19/Static-Assets/master/noise.gif');
+            z-index: 10000; pointer-events: none; display: none; opacity: 0.4;
+        }
+
+        .phase-3 body { animation: extreme-glitch 0.08s infinite; }
+        @keyframes extreme-glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-8px, 4px) skewX(15deg); filter: hue-rotate(90deg); }
+            40% { transform: translate(8px, -4px) skewY(-15deg); filter: invert(0.1); }
+            100% { transform: translate(0); }
+        }
+
+        #sns-buttons { position: fixed; bottom: 25vh; left: 50%; transform: translateX(-50%); display: flex; gap: 25px; z-index: 10005; opacity: 0; visibility: hidden; transition: opacity 1.5s; }
+        #sns-buttons.show { opacity: 1; visibility: visible; }
+        .sns-btn { display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.3); transition: all 0.3s; backdrop-filter: blur(5px); cursor: pointer; }
+        .sns-btn svg { width: 28px; height: 28px; fill: #fff; }
+        .sns-btn:hover { transform: translateY(-5px); background-color: rgba(255, 255, 255, 0.2); }
+
+        .error-popup-instance { position: fixed; width: 320px; background: var(--win-gray); border: 2px solid; border-color: #fff #000 #000 #fff; z-index: 11000; padding: 2px; font-family: sans-serif; box-shadow: 3px 3px 0 #000; }
+
+        /* --- スマホ用改行制御用の設定 --- */
+        .sp-only { display: none; }
+
+        /* --- スマホ用のスタイル調整 --- */
+        @media (max-width: 768px) {
+            .sp-only { display: block; } /* スマホの時だけ改行を有効化 */
+            .teaser-text { 
+                font-size: 1.5rem !important; /* 改行が多いため、文字を小さく調整 */
+                line-height: 1.5 !important; 
+                width: 100%;
+            }
+            .progress-container { width: 80%; }
+            #logo-screen img { width: 75% !important; }
+            #sns-buttons { bottom: 15vh; gap: 15px; }
+            .sns-btn { width: 50px; height: 50px; }
+            /* エラーポップアップを画面内に収める */
+            .error-popup-instance { width: 280px !important; left: 50% !important; transform: translateX(-50%) !important; }
+        }
+    </style>
+</head>
+<body id="body-tag">
+
+    <div class="noise-overlay"></div>
+
+    <div id="loading-screen">
+        <div class="loading-text" id="loading-text-el" data-original="NOW_LOADING:">NOW_LOADING: <span id="percent">0</span>%</div>
+        <div class="progress-container"><div id="progress-bar"></div></div>
+    </div>
+
+    <div id="logo-screen"><img src="logo.png" alt="Logo" style="width: 40%; max-width: 450px; filter: grayscale(100%) brightness(2);"></div>
+
+    <div id="teaser-1" class="teaser-screen"><div class="teaser-text" data-original="東京仮想がおくる<br class='sp-only'>新プロジェクト">東京仮想がおくる<br class="sp-only">新プロジェクト</div></div>
+    <div id="teaser-2" class="teaser-screen"><div class="teaser-text" data-original="全く新しい<br class='sp-only'>アイドル<br class='sp-only'>グループ">全く新しい<br class="sp-only">アイドル<br class="sp-only">グループ</div></div>
+    <div id="teaser-3" class="teaser-screen"><div class="teaser-text" data-original="少女たちは<br class='sp-only'>ここから<br class='sp-only'>全てを<br class='sp-only'>超えてゆく">少女たちは<br class="sp-only">ここから<br class="sp-only">全てを<br class="sp-only">超えてゆく</div></div>
+    <div id="teaser-murder" class="teaser-screen"><div class="teaser-text" data-original="例え全てのアイドルを<br>鏖にしても">例え全てのアイドルを<br><span>鏖</span>にしても</div></div>
+
+    <main id="main-content"><img id="dynamic-img" src="" alt="" class="hero-image"></main>
+
+    <div id="sns-buttons">
+        <div onclick="handleSnsClick('https://x.com/PROJECT59_JP')" class="sns-btn"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg></div>
+        <div onclick="handleSnsClick('https://www.tiktok.com/@project59_jp')" class="sns-btn"><svg viewBox="0 0 448 512"><path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14Z"></path></svg></div>
+    </div>
+
+    <script>
+        const bodyTag = document.getElementById('body-tag');
+        const mainImg = document.getElementById('dynamic-img');
+        const mainContent = document.getElementById('main-content');
+        const loadingScreen = document.getElementById('loading-screen');
+        const snsButtons = document.getElementById('sns-buttons');
+
+        let phase = parseInt(sessionStorage.getItem('phase') || '0');
+
+        if (phase >= 5) {
+            loadingScreen.style.display = 'none';
+            document.getElementById('logo-screen').style.display = 'none';
+            mainImg.src = 'main4.png';
+            mainContent.classList.add('show');
+            mainContent.style.opacity = '1';
+            snsButtons.classList.add('show');
+        } else {
+            initSequence();
+        }
+
+        function handleSnsClick(url) {
+            if (phase >= 4) { window.open(url, '_blank'); }
+            else { location.reload(); }
+        }
+
+        function initSequence() {
+            if (phase === 2 || phase === 3) {
+                if (phase === 3) {
+                    bodyTag.classList.add('phase-3');
+                    document.querySelector('.noise-overlay').style.display = 'block';
+                }
+
+                setInterval(() => {
+                    const chars = 'ガイアイドリル超越殺鏖東京仮想G59!?@#%';
+                    const activeTexts = document.querySelectorAll('.teaser-screen.active .teaser-text, #loading-text-el');
+                    activeTexts.forEach(el => {
+                        const original = el.getAttribute('data-original') || el.innerHTML;
+                        if (!el.hasAttribute('data-original')) el.setAttribute('data-original', original);
+                        let glitched = original.split('').map(char => {
+                            // 改行タグなどは壊さないように保護
+                            if (char === '<' || char === 'b' || char === 'r' || char === '>' || char === '/' || char === '=' || char === '"' || char === "'" || char === ' ') return char;
+                            let glitchRate = (phase === 3) ? 0.88 : 0.98;
+                            return Math.random() > glitchRate ? chars[Math.floor(Math.random() * chars.length)] : char;
+                        }).join('');
+                        el.innerHTML = glitched;
+                    });
+                }, 80);
+            }
+
+            window.addEventListener('load', () => {
+                let progress = 0;
+                let limit = 100;
+                if (phase === 1) limit = 90;
+                if (phase === 4) limit = 59;
+                const imageList = ['main.png', 'main.png', 'main2.png', 'main3.png', 'main4.png'];
+                mainImg.src = imageList[phase];
+                const progressBar = document.getElementById('progress-bar');
+                const progressPercent = document.getElementById('percent');
+                const timer = setInterval(() => {
+                    progress += Math.floor(Math.random() * 5) + 3;
+                    if (progress >= limit) {
+                        progress = limit;
+                        clearInterval(timer);
+                        if (phase === 1) { spawnSingleError(); }
+                        else if (phase === 4) { spawnMassiveErrors(); }
+                        else { startSequence(); }
+                    }
+                    progressBar.style.width = progress + '%';
+                    progressPercent.textContent = progress;
+                }, 50);
+            });
+        }
+
+        function spawnSingleError() { createPopup(window.innerWidth/2 - 160, window.innerHeight/2 - 60, true); }
+        function spawnMassiveErrors() {
+            let count = 0; const max = 20;
+            const interval = setInterval(() => {
+                createPopup(Math.random() * (window.innerWidth - 320), Math.random() * (window.innerHeight - 150), false);
+                if (++count >= max) clearInterval(interval);
+            }, 80);
+        }
+        function createPopup(x, y, isPhase1) {
+            const div = document.createElement('div');
+            div.className = 'error-popup-instance';
+            div.style.left = x + 'px'; div.style.top = y + 'px';
+            div.innerHTML = `<div style="background:var(--win-blue);color:#fff;padding:3px 6px;font-size:11px;font-weight:bold;">System Error</div><div style="padding:15px;color:#000;font-size:12px;">A critical error has occurred.</div><div style="text-align:center;padding-bottom:10px;"><button style="background:var(--win-gray);border:2px solid;border-color:#fff #000 #000 #fff;padding:2px 15px;cursor:pointer;">OK</button></div>`;
+            document.body.appendChild(div);
+            div.querySelector('button').onclick = () => {
+                div.remove();
+                if (isPhase1) { sessionStorage.setItem('phase', '2'); location.reload(); }
+                else if (document.querySelectorAll('.error-popup-instance').length === 0) { startPhase4RedSequence(); }
+            };
+        }
+
+        async function startPhase4RedSequence() {
+            bodyTag.classList.add('phase-4-red');
+            let progress = 59;
+            const timer = setInterval(() => {
+                progress += 3;
+                if (progress >= 100) { progress = 100; clearInterval(timer); startSequence(); }
+                document.getElementById('progress-bar').style.width = progress + '%';
+                document.getElementById('percent').textContent = progress;
+            }, 25);
+        }
+
+        async function startSequence() {
+            const wait = (ms) => new Promise(res => setTimeout(res, ms));
+            loadingScreen.classList.add('loaded');
+            await wait(1000);
+            await wait(1200);
+            const logo = document.getElementById('logo-screen');
+            logo.style.opacity = '1'; logo.style.visibility = 'visible';
+            await wait(1000);
+            logo.style.opacity = '0';
+            await wait(800);
+            const t1 = document.getElementById('teaser-1'); t1.classList.add('active'); await wait(2500); t1.classList.remove('active'); await wait(600);
+            const t2 = document.getElementById('teaser-2'); t2.classList.add('active'); await wait(2200); t2.classList.remove('active'); await wait(600);
+            const t3 = document.getElementById('teaser-3'); t3.classList.add('active'); await wait(3200); t3.classList.remove('active'); await wait(600);
+            if (phase === 4) {
+                const t4 = document.getElementById('teaser-murder'); t4.classList.add('active'); await wait(2000); t4.classList.remove('active'); await wait(500);
+            }
+            mainContent.classList.add('show');
+            snsButtons.classList.add('show');
+            setTimeout(() => {
+                let nextPhase = phase + 1;
+                if (phase !== 1) sessionStorage.setItem('phase', nextPhase);
+            }, 2000);
+        }
+    </script>
 </body>
 </html>
